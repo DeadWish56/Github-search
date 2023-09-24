@@ -1,0 +1,72 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+p {
+    font-size: 24px;
+    margin: 5px 0px 5px 16px;
+}
+.search-box {
+    width: 660px;
+    background-color: #C4C4C4;
+    margin: 0px auto;
+    padding-bottom: 36px;
+}
+
+.search-input {
+    width: 500px;
+    height: 61px;
+    margin: 0 auto;
+    border: none;
+    background-color: #fff;
+    margin: 62px 84px 0px 77px;
+    font-size: 48px;
+}
+
+.autocomplete {
+    list-style: none;
+    padding: 0px;
+    margin: 0;
+    
+}
+
+.autocomplete-item {
+    width: 500px;
+    height: 44px;
+    background-color: #E3E3E3;
+    margin: 0 auto;
+    border: 2px solid black;
+    cursor: pointer;
+    font-size: 30px;
+}
+
+.autocomplete-item:hover {
+    background-color: #65CDF9;
+}
+
+.repo-collection {
+    list-style: none;
+    margin: 45px 0 0 0;
+    padding: 0px;
+}
+
+.collection-item {
+    background-color: #E27BEB;
+    width: 500px;
+    border: 1px solid black;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.remove-item {
+    cursor: pointer;
+    width: 46px;
+    height: 43px;
+    background-color: transparent;
+    border: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='46' height='42' viewBox='0 0 46 42' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M44 40.5L23 21.25L2 2' stroke='%23FF0000' stroke-width='4'/%3e%3c/svg%3e "),
+    url("data:image/svg+xml;charset=UTF-8,%3csvg width='46' height='42' viewBox='0 0 46 42' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M2 40.5L44 2' stroke='%23FF0000' stroke-width='4'/%3e%3c/svg%3e ");
+    margin-right: 34px;
+}

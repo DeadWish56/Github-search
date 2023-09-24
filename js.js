@@ -1,34 +1,64 @@
-const sliders = document.querySelectorAll('.swiper');
-let swiper = null;
+const searchInput = document.querySelector('.search-input')
+const autocomplete = document.querySelector('.autocomplete')
+const repoCollection = document.querySelector('.repo-collection')
 
-function mobileSlider() {
-  for (let i = 0; i < sliders.length; i++) {
-    let slider = sliders[i];
+const getRepo = async function(repoName) {
+  const data = await fetch(`https://api.github.com/search/repositories?q=${repoName}&per_page=5`)
+  const response = await data.json()
+  let result = response.items
+  return result
+}
 
-    if (window.innerWidth < 768 && slider.dataset.mobile == 'false') {
-      swiper = new Swiper(slider, {
-        loop: true,
-        pagination: {
-          el: slider.querySelector('.swiper-pagination'),
-          clickable: true,
-        },
-        slidesPerView: "auto",
-        spaceBetween: 16,
+const getCollection = function(elem) {  
+  let li = document.createElement('li')
+  li.classList.add('collection-item')
+  const div = document.createElement('div')
+  div.classList.add('info')
+  const button = document.createElement('button')
+  button.classList.add('remove-item')
+  div.innerHTML = `<p>Name: ${elem.name}</p>
+  <p>Owner: ${elem.owner.login}</p>
+  <p>Stars: ${elem.stargazers_count}</p>`  
+  li.append(div)
+  li.append(button)
+  repoCollection.append(li)
+}
+
+const createUsers = function(usersData) {
+  if (searchInput.value) {
+    usersData.forEach(function(el) {
+      const userElement = document.createElement('li')
+      userElement.classList.add('autocomplete-item')
+      userElement.textContent = el.name
+      autocomplete.append(userElement)
+      userElement.addEventListener('click', function(e) {
+        getCollection(el)
+        searchInput.value = ""
+        autocomplete.innerHTML = ""
       })
-
-      slider.dataset.mobile = 'true';
-    }
-
-    if (window.innerWidth > 767 && slider.dataset.mobile == 'true') {
-      slider.dataset.mobile = 'false';
-
-      if (slider.dataset.mobile == 'false') {
-        swiper.destroy();
-      }
-    }
+    })
+  } else {
+    autocomplete.innerHTML = ""
   }
 }
-mobileSlider();
-window.addEventListener('resize', () => {
-  mobileSlider();
-});
+
+const debounce = (fn, debounceTime) => {
+  let timeout;
+    return function() {
+      const args = arguments;
+      clearTimeout(timeout);
+      timeout = setTimeout(() => fn.apply(this, args), debounceTime);
+    };
+  };
+
+  searchInput.addEventListener('input', debounce(async function(e){
+    autocomplete.innerHTML = ''
+    const repo = await getRepo(searchInput.value)
+    createUsers(repo)
+  }, 400))
+
+  repoCollection.addEventListener('click', function(e) {
+    if (e.target.tagName === 'BUTTON') {
+      e.target.closest('li').remove()
+    }
+  })

@@ -1,20 +1,21 @@
 <!DOCTYPE html>
-<html class="page" lang="ru">
+<html class="page" lang="ru" style="background-color: white;">
 
 <head>
   <meta charset="utf-8">
   <title></title>
   <meta name="description" content="">
   <meta name="keywords" content="">
-
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="fonts/fonts.css">
-
+  <link rel="stylesheet" href="css.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-
-<body class="page__body">
- 
+<body>
+  <div class="search-box">
+    <input type="text" class="search-input" placeholder="Search repositories">
+    <ul class="autocomplete"></ul>
+    <ul class="repo-collection"></ul>
+  </div>
+  <script src="js.js"></script>
 </body>
-
 </html>
