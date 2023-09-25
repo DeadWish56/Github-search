@@ -3,10 +3,12 @@ const autocomplete = document.querySelector('.autocomplete')
 const repoCollection = document.querySelector('.repo-collection')
 
 const getRepo = async function(repoName) {
-  const data = await fetch(`https://api.github.com/search/repositories?q=${repoName}&per_page=5`)
-  const response = await data.json()
-  let result = response.items
-  return result
+  if (searchInput.value.length > 0) {
+    const data = await fetch(`https://api.github.com/search/repositories?q=${repoName}&per_page=5`)
+    const response = await data.json()
+    let result = response.items
+    return result
+  }
 }
 
 const getCollection = function(elem) {  
@@ -24,14 +26,14 @@ const getCollection = function(elem) {
   repoCollection.append(li)
 }
 
-const createUsers = function(usersData) {
+const getAutocomplete = function(usersData) {
   if (searchInput.value) {
     usersData.forEach(function(el) {
-      const userElement = document.createElement('li')
-      userElement.classList.add('autocomplete-item')
-      userElement.textContent = el.name
-      autocomplete.append(userElement)
-      userElement.addEventListener('click', function(e) {
+      const autoCompleteElement = document.createElement('li')
+      autoCompleteElement.classList.add('autocomplete-item')
+      autoCompleteElement.textContent = el.name
+      autocomplete.append(autoCompleteElement)
+      autoCompleteElement.addEventListener('click', function(e) {
         getCollection(el)
         searchInput.value = ""
         autocomplete.innerHTML = ""
@@ -54,7 +56,7 @@ const debounce = (fn, debounceTime) => {
   searchInput.addEventListener('input', debounce(async function(e){
     autocomplete.innerHTML = ''
     const repo = await getRepo(searchInput.value)
-    createUsers(repo)
+    getAutocomplete(repo)
   }, 400))
 
   repoCollection.addEventListener('click', function(e) {
